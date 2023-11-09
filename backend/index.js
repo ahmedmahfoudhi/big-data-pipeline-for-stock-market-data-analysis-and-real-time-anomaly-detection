@@ -5,6 +5,7 @@ import StockPredictionModel from './models/stock_prediction.js'
 import StockAnalysisModel from './models/stock_analysis.js'
 import http from 'http'
 import stockAnalysisRoutes from './routes/stockAnalysisRoutes.js'
+import stockPredictionRoutes from './routes/stockPredictionsRoutes.js'
 import cors from 'cors'
 import { Server } from 'socket.io'
 const app = express()
@@ -16,10 +17,10 @@ const io = new Server(server, {
 })
 
 dotenv.config()
-const port = 3001
+const port = process.env.PORT || 3001
 app.use(cors())
 app.use('/stock_analysis', stockAnalysisRoutes)
-
+app.use('/stock_prediction', stockPredictionRoutes)
 const connect = async () => {
     try {
         await mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -43,9 +44,10 @@ server.listen(port, async() => {
 })
 
 StockPredictionModel.watch().on('change', (data) => {
-    console.log(data)
+    
     if(data.operationType === "insert"){
         const document = data.fullDocument
+        console.log(document)
         io.emit('prediction', document)
     }
     

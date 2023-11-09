@@ -1,9 +1,24 @@
-FROM python:3.9 
+ARG PYTHON_VERSION=3.8.10
+FROM python:${PYTHON_VERSION}-slim as base
 
-COPY requirements.txt /
 
-RUN pip -r /requirements.txt
+ENV PYTHONDONTWRITEBYTECODE=1
 
-COPY kafka-producer /
+ENV PYTHONUNBUFFERED=1
 
+WORKDIR /app
+
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+    --mount=type=bind,source=requirements.txt,target=requirements.txt \
+    python -m pip install -r requirements.txt
+
+
+# Copy the source code into the container.
+COPY kafka-producer .
+
+# Expose the port that the application listens on.
+EXPOSE 8000
+
+CMD python3 /app/main.py
 

@@ -2,26 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base{
+  :root{
+    --color-bkg-light: #FFFFFF;
+    --gradient-bkg: linear-gradient(147deg, #f7f7f7 0%, #eaeaea 74%);
+    --color-content: #34495e;
+    --card-bkg:  #fafafa;
+    --card-border: #e0e0e0;
+    --card-text: #333;
+    --bar-color: #B0BEC5;
+    --graph-line-1: #3498db;
+    --graph-line-2: #9b59b6;
+    --footer-bkg: #bdc3c7;
+    --footer-text: #fff;
+    --pie-1: #3498db;
+    --pie-2: #1abc9c;
+    --table-bkg: #1e2a35;
+    --table-header: #bdc3c7;
+    --color-anomaly: #c0392b;
   }
+
+  :root[theme="dark"]{
+    --color-bkg: #000;
+    --gradient-bkg: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
+    --color-content: #ecf0f1;
+    --card-bkg: #142535;
+    --card-border: #555;
+    --card-text: #fff;
+    --bar-color: #005B41;
+    --footer-bkg: #18222a;
+    --footer-text: #fff;
+    --graph-line-1: #2980b9;
+    --graph-line-2: #8e44ad;
+    --pie-1: #34495e;
+    --pie-2: #16a085;
+    --table-bkg: #1e2a35;
+    --table-header: #34495e;
+    --color-anomaly: #e74c3c;
+  }
+
+  body{
+    @apply font-system
+  }
+
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+
